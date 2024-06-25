@@ -59,12 +59,14 @@ resource "google_compute_instance" "blog" {
   name         = var.app_name
   machine_type = var.machine_name
 
+  tags = ["${var.network_name}-web"]
   
   boot_disk {
     initialize_params {
       image = data.google_compute_image.ubuntu.self_link
     }
   }
+  
   network_interface {
    subnetwork = module.app_network.subnets_names[0]
    access_config {
@@ -72,6 +74,7 @@ resource "google_compute_instance" "blog" {
     }
   }  
 
+  metadata_startup_script = "apt -y update; apt -y install nginx; echo ${var.app_name} > /var/www/html/index.html"
   allow_stopping_for_update = true
 
 }
