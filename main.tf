@@ -11,6 +11,7 @@ resource "google_compute_subnetwork" "app" {
 }
 
 
+
 data "google_compute_image" "ubuntu" {
   most_recent = true
   project     = "ubuntu-os-cloud" 
