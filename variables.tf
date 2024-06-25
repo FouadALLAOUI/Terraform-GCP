@@ -1,45 +1,55 @@
-provider "google" {
-  project = "terraform-427513"
-  region  = "us-west1"
-  zone    = "us-west1-a"
+variable "project_id" {
+  type = string
+  default = "terraform-427513"
 }
 
-resource "google_compute_network" "app" {
-  name                    = "app"
-  auto_create_subnetworks = false
+variable "region" {
+  type    = string
+  default = "us-west1"
 }
 
-resource "google_compute_subnetwork" "app" {
-  name          = "app"
-  ip_cidr_range = "10.2.0.0/16"
-  region        = "us-west1"
-  network       = google_compute_network.app.id
+variable "network_name" {
+  type    = string
+  default = "app"
+}
+
+variable "network_ip_range" {
+  type    = string
+  default = "10.2.0.0/16"
+}
+
+variable "image_project" {
+  type    = string
+  default = "ubuntu-os-cloud"
+}
+
+variable "image_family" {
+  type    = string
+  default = "ubuntu-2204-lts"
+}
+
+variable "app_name" {
+  type    = string
+  default = "blog"
+}
+
+variable "machine_name" {
+  type    = string
+  default = "e2-micro"
 }
 
 
-data "google_compute_image" "ubuntu" {
-  most_recent = true
-  project     = "ubuntu-os-cloud" 
-  family      = "ubuntu-2204-lts"
-}
 
-resource "google_compute_instance" "web" {
-  name         = "web"
-  machine_type = "e2-micro"
 
-  
-  boot_disk {
-    initialize_params {
-      image = data.google_compute_image.ubuntu.self_link
-    }
-  }
-  network_interface {
-   subnetwork = "app"
-   access_config {
-      # Leave empty for dynamic public IP
-    }
-  }  
 
-  allow_stopping_for_update = true
 
-}
+
+
+
+
+
+
+
+
+
+
